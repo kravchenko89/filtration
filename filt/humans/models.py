@@ -1,5 +1,6 @@
 from faker import Faker
 import random
+
 from django.db import models
 
 
@@ -15,7 +16,8 @@ class Teacher(models.Model):
     credit_card = models.CharField(max_length=20, null=True, blank=True)
 
     def get_info(self):
-        return f'{self.first_name} {self.last_name} {self.birth_date} {self.email} {self.country} {self.lesson}'
+        return f'{self.first_name} {self.last_name} {self.birth_date}' \
+               f' {self.email} {self.country} {self.lesson}'
 
     @classmethod
     def generate_teacher(cls):
@@ -34,5 +36,31 @@ class Teacher(models.Model):
         teacher.save()
         return teacher
 
+
 class Group(models.Model):
-    pass
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    lesson = models.CharField(max_length=100)
+    curator = models.CharField(max_length=100, null=True, blank=True)
+    group = models.CharField(max_length=20)
+    phone = models.CharField(max_length=16)
+
+    def get_info(self):
+        return f'Student:: {self.first_name} {self.last_name} | Group:: {self.group}' \
+               f' lessons:: {self.lesson} | Curator:: {self.curator} | Phone:: {self.phone}'
+
+    @classmethod
+    def generate_group(cls):
+        faker = Faker()
+        less = ['Math', 'Physics', 'History',
+                'Language', 'Management', 'Python']
+        group = cls(
+            first_name=faker.first_name(),
+            last_name=faker.last_name(),
+            lesson=random.choice(less),
+            curator=faker.name(),
+            group=random.randint(1, 20),
+            phone=faker.phone_number(),
+        )
+        group.save()
+        return group

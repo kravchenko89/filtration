@@ -1,10 +1,10 @@
 from django.core.management.base import BaseCommand
 
-from humans.models import Teacher
+from humans.models import Group
 
 
 class Command(BaseCommand):
-    help = 'random teachers'
+    help = 'random group'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -14,4 +14,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         number = int(options.get('number') or 100)
         for _ in range(number):
-            Teacher.generate_teacher()
+            Group.generate_group()

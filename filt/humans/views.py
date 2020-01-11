@@ -1,23 +1,25 @@
+from pdb import set_trace
 from django.shortcuts import render
-from django.http import HttpResponse
+
+from django.db.models import Q
+
 from humans.models import Teacher
 
 
 def generate_teacher(request):
-    # queryset = Teacher.objects.all()
-    # response = ''
-    # for teacher in queryset:
-    #     response += teacher.get_info() + '<br>'
-    # return HttpResponse(response)
-
     queryset = Teacher.objects.all()
     response = ''
 
-    fn = request.GET.get('first_name')
+    fn = request.GET.get('add')
+
     if fn:
-        queryset = queryset.filter(first_name__istartswith=fn)
+        queryset = queryset.filter(
+            Q(first_name__istartswith=fn)
+            | Q(last_name__istartswith=fn)
+            | Q(email__istartswith=fn))
 
     for teacher in queryset:
+        set_trace()
         response += teacher.get_info() + '<br>'
     return render(request,
                   'teachers_list.html',

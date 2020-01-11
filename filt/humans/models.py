@@ -33,3 +33,6 @@ class Teacher(models.Model):
         )
         teacher.save()
         return teacher
+
+class Group(models.Model):
+    pass

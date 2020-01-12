@@ -26,7 +26,7 @@ def generate_teacher(request):
             | Q(email__istartswith=fn))
 
     for teacher in queryset:
-        # set_trace()
+        set_trace()
         response += teacher.get_info() + '<br>'
     return render(request,
                   'teachers_list.html',
@@ -54,7 +54,7 @@ def generate_groups(request):
 
 
 def add_teacher(request):
-    # set_trace()
+    set_trace()
     if request.method == 'POST':
         form = TeacherAddForm(request.POST)
         if form.is_valid():
@@ -68,7 +68,7 @@ def add_teacher(request):
 
 
 def add_group(request):
-    # set_trace()
+
     if request.method == 'POST':
         form = GroupAddForm(request.POST)
         if form.is_valid():

@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-             '--number',
+            '--number',
             help='Delete poll instennd of closin it',)
 
     def handle(self, *args, **options):

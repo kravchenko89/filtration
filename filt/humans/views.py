@@ -2,9 +2,10 @@ from pdb import set_trace
 
 from django.shortcuts import render
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from humans.models import Teacher, Group
+from humans.forms import TeacherAddForm, GroupAddForm
 
 
 def generate_group(request):
@@ -25,7 +26,7 @@ def generate_teacher(request):
             | Q(email__istartswith=fn))
 
     for teacher in queryset:
-        set_trace()
+        # set_trace()
         response += teacher.get_info() + '<br>'
     return render(request,
                   'teachers_list.html',
@@ -50,3 +51,31 @@ def generate_groups(request):
     return render(request,
                   'groups_list.html',
                   context={'groups_list': response})
+
+
+def add_teacher(request):
+    # set_trace()
+    if request.method == 'POST':
+        form = TeacherAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('filt-teach/')
+    else:
+        form = TeacherAddForm()
+    return render(request,
+                  'teachers_add.html',
+                  context={'form': form})
+
+
+def add_group(request):
+    # set_trace()
+    if request.method == 'POST':
+        form = GroupAddForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('filt-group/')
+    else:
+        form = GroupAddForm()
+    return render(request,
+                  'groups_add.html',
+                  context={'form': form})

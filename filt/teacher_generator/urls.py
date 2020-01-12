@@ -16,12 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from humans.views import generate_teacher, generate_group, generate_groups
+from humans.views import generate_teacher, generate_group, generate_groups, add_teacher, add_group
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('filt-teach/', generate_teacher),
     path('filt-group/', generate_groups),
-    path('generate-group/', generate_group)
+    path('generate-group/', generate_group),
+    path('add-teacher', add_teacher),
+    path('add-group', add_group),
 ]

@@ -16,3 +16,15 @@ class Migration(migrations.Migration):
             field=models.CharField(blank=True, max_length=100, null=True),
         ),
     ]
+
+# def forward(apps, schema_editor):
+#     Student = apps.get_model('students', 'Student')
+#     for student in Student.objects.all().only('id', 'phone').iterator():
+#         student.phone = ''.join(x for x in student.phone if x.isdigit())
+#         student.save(update_fields=['phone'])
+#
+#
+#
+#     operations = [
+#         migrations.RunPython(forward),
+#     ]

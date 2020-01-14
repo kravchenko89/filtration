@@ -1,12 +1,10 @@
-from pdb import set_trace
-
 from django.shortcuts import render
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 
 from humans.models import Teacher, Group
-from humans.forms import TeacherAddForm, GroupAddForm
+from humans.forms import TeacherAddForm, GroupAddForm, EmailForm
 
 
 def generate_group(request):
@@ -115,3 +113,16 @@ def edit_group(request, num):
     return render(request,
                   'edit_group.html',
                   context={'form': form, 'num': num})
+
+
+def email_list(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            form.save_email()
+            return HttpResponseRedirect(reverse('email-list'))
+    else:
+        form = EmailForm()
+    return render(request,
+                  'email_list.html',
+                  context={'form': form})

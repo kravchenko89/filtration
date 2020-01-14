@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EMAIL</title>
+</head>
+<body>
+
+EMAIL
+<form action="{% url 'email-list' %}" method="post">
+    {% csrf_token %}
+{{ form.as_p }}
+    <input name="submit" type="submit">
+</form>
+
+</body>
+</html>

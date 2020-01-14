@@ -9,7 +9,10 @@
 <form action="{% url 'filt-teacher' %}" method="get">
     <input name="add">
     <input name="submit" type="submit">
+</form>
 
+<form action="{% url 'add-teacher' %}">
+    <button name="add">ADD TEACHER</button>
 </form>
 
 {{ teachers_list|safe }}

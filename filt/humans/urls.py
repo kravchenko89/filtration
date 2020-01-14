@@ -10,7 +10,7 @@ urlpatterns = [
     path('filt/group/', generate_groups, name='filt-group'),
     path('gene/group/', generate_group, name='gen-group'),
     path('add/teacher/', add_teacher, name='add-teacher'),
-    path('add/group/<int:num>', add_group, name='add-group'),
+    path('add/group/', add_group, name='add-group'),
     path('edit/teacher/<int:num>/', edit_teacher, name='edit-teacher'),
     path('edit/group/<int:num>/', edit_group, name='edit-group'),
 ]

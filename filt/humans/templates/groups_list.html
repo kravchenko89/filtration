@@ -9,7 +9,9 @@
 <form action="{% url 'filt-group' %}" method="get">
     <input name="push">
     <input name="submit" type="submit">
-
+</form>
+<form action="{% url 'add-group' %}">
+    <button name="add">ADD GROUP</button>
 </form>
 
 {{ groups_list|safe }}

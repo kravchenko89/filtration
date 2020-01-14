@@ -1,7 +1,8 @@
 from django.urls import path
 
 from humans.views import (generate_teacher, generate_group,
-                          generate_groups, add_teacher, add_group, edit_teacher)
+                          generate_groups, add_teacher,
+                          add_group, edit_teacher, edit_group)
 
 
 urlpatterns = [
@@ -9,6 +10,7 @@ urlpatterns = [
     path('filt/group/', generate_groups, name='filt-group'),
     path('gene/group/', generate_group, name='gen-group'),
     path('add/teacher/', add_teacher, name='add-teacher'),
-    path('add/group/', add_group, name='add-group'),
-    path('edit/teacher/', edit_teacher, name='edit-teacher'),
+    path('add/group/<int:num>', add_group, name='add-group'),
+    path('edit/teacher/<int:num>/', edit_teacher, name='edit-teacher'),
+    path('edit/group/<int:num>/', edit_group, name='edit-group'),
 ]

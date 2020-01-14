@@ -2,7 +2,7 @@ from pdb import set_trace
 
 from django.shortcuts import render
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 
 from humans.models import Teacher, Group
@@ -19,7 +19,6 @@ def generate_teacher(request):
     response = ''
 
     fn = request.GET.get('add')
-
     if fn:
         queryset = queryset.filter(
             Q(first_name__istartswith=fn)
@@ -27,11 +26,11 @@ def generate_teacher(request):
             | Q(email__istartswith=fn))
 
     for teacher in queryset:
-        # set_trace()
-        response += teacher.get_info() + '<br>'
+
+        response += f'<a  href="../../edit/teacher/{teacher.id}">' + teacher.get_info() + '</a><br>'
     return render(request,
                   'teachers_list.html',
-                  context={'teachers_list': response})
+                  context={'teachers_list': response, })
 
 
 def generate_groups(request):
@@ -48,7 +47,7 @@ def generate_groups(request):
             | Q(group__startswith=gr))
 
     for group in queryset:
-        response += group.get_info() + '<br>'
+        response += f'<a  href="../../edit/group/{group.id}">' + group.get_info() + '<br>'
     return render(request,
                   'groups_list.html',
                   context={'groups_list': response})
@@ -81,3 +80,38 @@ def add_group(request):
                   'groups_add.html',
                   context={'form': form})
 
+
+def edit_teacher(request, num):
+    try:
+        teacher = Teacher.objects.get(id=num)
+    except Teacher.DoseNotExist:
+        HttpResponseNotFound(f'Teacher with id{num} not found')
+    # set_trace()
+    if request.method == 'POST':
+        form = TeacherAddForm(request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('filt-teacher'))
+    else:
+        form = TeacherAddForm(instance=teacher)
+    return render(request,
+                  'edit_teacher.html',
+                  context={'form': form, 'num': num})
+
+
+def edit_group(request, num):
+    try:
+        group = Group.objects.get(id=num)
+    except Group.DoseNotExist:
+        HttpResponseNotFound(f'Teacher with id{num} not found')
+
+    if request.method == 'POST':
+        form = GroupAddForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('filt-group'))
+    else:
+        form = GroupAddForm(instance=group)
+    return render(request,
+                  'edit_group.html',
+                  context={'form': form, 'num': num})

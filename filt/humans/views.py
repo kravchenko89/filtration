@@ -24,8 +24,8 @@ def generate_teacher(request):
             | Q(email__istartswith=fn))
 
     for teacher in queryset:
-
-        response += f'<a  href="../../edit/teacher/{teacher.id}">' + teacher.get_info() + '</a><br>'
+        q = reverse('edit-teacher', args=[teacher.id])
+        response += f'<a  href="{q}">' + teacher.get_info() + '</a><br>'
     return render(request,
                   'teachers_list.html',
                   context={'teachers_list': response, })
@@ -45,14 +45,15 @@ def generate_groups(request):
             | Q(group__startswith=gr))
 
     for group in queryset:
-        response += f'<a  href="../../edit/group/{group.id}">' + group.get_info() + '<br>'
+        q = reverse('edit-group', args=[group.id])
+        response += f'<a  href="{q}">' + group.get_info() + '<br>'
     return render(request,
                   'groups_list.html',
                   context={'groups_list': response})
 
 
 def add_teacher(request):
-    # set_trace()
+
     if request.method == 'POST':
         form = TeacherAddForm(request.POST)
         if form.is_valid():
@@ -129,6 +130,6 @@ def email_list(request):
 
 
 def email_text(request):
-    file = open('emm.txt')
-    fun = file.read()
-    return HttpResponse(fun)
+    with open('emm.txt') as file:
+        txt = file.read()
+    return HttpResponse(txt)

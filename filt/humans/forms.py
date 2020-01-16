@@ -31,3 +31,9 @@ class EmailForm(Form):
         email_from = data['email']
         recipient_list = [settings.EMAIL_HOST_USER]
         send_mail(subject, message, email_from, recipient_list)
+
+        my_file = open('emm.txt', 'a')
+        text = subject
+        my_file.write(f"Email_from: {email_from} | Subject: {text} | Message: {message}\n <br>")
+
+        my_file.close()

@@ -126,3 +126,15 @@ def email_list(request):
     return render(request,
                   'email_list.html',
                   context={'form': form})
+
+
+def emaill(request):
+    file = open('emm.txt')
+    fun = file.read()
+    # a = ''
+    # for i in range(fun):
+    #     a += a
+    #
+    # print(i)
+
+    return HttpResponse(fun)

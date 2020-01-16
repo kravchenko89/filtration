@@ -128,13 +128,7 @@ def email_list(request):
                   context={'form': form})
 
 
-def emaill(request):
+def email_text(request):
     file = open('emm.txt')
     fun = file.read()
-    # a = ''
-    # for i in range(fun):
-    #     a += a
-    #
-    # print(i)
-
     return HttpResponse(fun)

@@ -34,6 +34,6 @@ class EmailForm(Form):
 
         my_file = open('emm.txt', 'a')
         text = subject
-        my_file.write(f"Email_from: {email_from} | Subject: {text} | Message: {message}\n <br>")
+        my_file.write(f"Email_from: {email_from} | Subject: {text} | Message: {message} <br>")
 
         my_file.close()

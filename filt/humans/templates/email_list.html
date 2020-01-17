@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+
+{% block head %}
+
     <meta charset="UTF-8">
-    <title>EMAIL</title>
-</head>
-<body>
+    <title>EMAIL LIST</title>
+
+{% endblock head %}
+
+{% block cont %}
 
 EMAIL
 <form action="{% url 'email-list' %}" method="post">
@@ -13,5 +16,4 @@ EMAIL
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock cont %}

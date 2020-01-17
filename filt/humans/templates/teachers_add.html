@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+% extends 'base.html' %}
+
+{% block head %}
+
     <meta charset="UTF-8">
     <title>ADD TEACHER</title>
-</head>
-<body>
+
+{% endblock head %}
+
+{% block cont %}
 
 ADD TEACHER
 <form action="{% url 'add-teacher' %}" method="post">
@@ -13,5 +16,4 @@ ADD TEACHER
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock cont %}

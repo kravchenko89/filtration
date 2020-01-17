@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+
+{% block head %}
+
     <meta charset="UTF-8">
     <title>ADD GROUP</title>
-</head>
-<body>
 
-ADD TEACHER
+{% endblock head %}
+
+{% block cont %}
+
+ADD GROUP
 <form action="{% url 'add-group' %}" method="post">
     {% csrf_token %}
 {{ form.as_p }}
     <input name="submit" type="submit">
 </form>
 
-</body>
-</html>
+{% endblock cont %}

@@ -1,11 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
+{% block head %}
+
+    <meta charset="UTF-8">
+    <title>GROUP LIST</title>
+
+{% endblock head %}
+
+{% block cont %}
+
+GROUP LIST
 <form action="{% url 'filt-group' %}" method="get">
     <input name="push">
     <input name="submit" type="submit">
@@ -16,5 +20,4 @@
 
 {{ groups_list|safe }}
 
-</body>
-</html>
+{% endblock cont %}

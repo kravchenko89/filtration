@@ -14,27 +14,21 @@ def generate_group(request):
 
 def generate_teacher(request):
     queryset = Teacher.objects.all()
-    response = ''
-
     fn = request.GET.get('add')
+
     if fn:
         queryset = queryset.filter(
             Q(first_name__istartswith=fn)
             | Q(last_name__istartswith=fn)
             | Q(email__istartswith=fn))
 
-    for teacher in queryset:
-        q = reverse('edit-teacher', args=[teacher.id])
-        response += f'<a  href="{q}">' + teacher.get_info() + '</a><br>'
     return render(request,
                   'teachers_list.html',
-                  context={'teachers_list': response, })
+                  context={'generate_teacher': queryset})
 
 
 def generate_groups(request):
     queryset = Group.objects.all()
-    response = ''
-
     gr = request.GET.get('push')
 
     if gr:
@@ -44,12 +38,9 @@ def generate_groups(request):
             | Q(lesson__istartswith=gr)
             | Q(group__startswith=gr))
 
-    for group in queryset:
-        q = reverse('edit-group', args=[group.id])
-        response += f'<a  href="{q}">' + group.get_info() + '<br>'
     return render(request,
                   'groups_list.html',
-                  context={'groups_list': response})
+                  context={'generate_groups': queryset})
 
 
 def add_teacher(request):
@@ -85,7 +76,7 @@ def edit_teacher(request, num):
         teacher = Teacher.objects.get(id=num)
     except Teacher.DoseNotExist:
         HttpResponseNotFound(f'Teacher with id{num} not found')
-    # set_trace()
+
     if request.method == 'POST':
         form = TeacherAddForm(request.POST, instance=teacher)
         if form.is_valid():

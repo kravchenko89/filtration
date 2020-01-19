@@ -1,4 +1,5 @@
-from django.urls import path
+from django.conf import settings
+from django.urls import include, path
 
 from humans.views import (generate_teacher, generate_group,
                           generate_groups, add_teacher,
@@ -16,3 +17,9 @@ urlpatterns = [
     path('email/list/', email_list, name='email-list'),
     path('email/', email_text, name='email')
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls))
+    ] + urlpatterns

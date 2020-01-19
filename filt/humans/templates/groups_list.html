@@ -1,20 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block head %}
+
+
+    <title>GROUP LIST</title>
+
+{% endblock head %}
+
+
+{% block header %}
+    <h1 align="center">GROUP LIST</h1>
+{% endblock header %}
+
+
+{% block cont %}
 
 <form action="{% url 'filt-group' %}" method="get">
     <input name="push">
     <input name="submit" type="submit">
 </form>
+
 <form action="{% url 'add-group' %}">
     <button name="add">ADD GROUP</button>
 </form>
 
-{{ groups_list|safe }}
 
-</body>
-</html>
+
+
+    <table style="width:100%" border="1px solid #000">
+      <tr>
+        <th>Edit</th>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Group</th>
+        <th>Curator</th>
+        <th>Lesson</th>
+        <th>Phone</th>
+      </tr>
+              {% for group in generate_groups %}
+      <tr>
+        <td width="5"><a href="{% url 'edit-group' group.id %}">Edit</a></td>
+        <td width="5">{{group.id}}</td>
+        <td width="20">{{group.first_name}}</td>
+        <td width="20">{{group.last_name}}</td>
+        <td width="5">{{group.group}}</td>
+        <td width="15">{{group.curator}}</td>
+        <td width="10">{{group.lesson}}</td>
+        <td width="20">{{group.phone}}</td>
+      </tr>
+        {% endfor %}
+    </table>
+
+{% endblock cont %}

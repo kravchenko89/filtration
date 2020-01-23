@@ -20,12 +20,12 @@ class Command(BaseCommand):
         headmans = []   # Student
         print(curators)
         for _ in range(10):
-            curators.append(Teacher.generate())
-            headmans.append(Student.generate())
+            curators.append(Teacher.generate_teacher())
+            headmans.append(Student.generate_student())
 
         number = int(options.get('number') or 100)
         for _ in range(number):
-            group = Group.generate()
+            group = Group.generate_group()
             group.curratt = random.choice(curators)
             group.headman = random.choice(headmans)
             group.save()

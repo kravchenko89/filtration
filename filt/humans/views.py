@@ -8,7 +8,7 @@ from humans.forms import TeacherAddForm, GroupAddForm, EmailForm
 
 
 def generate_group(request):
-    group = Group.generate()
+    group = Group.generate_group()
     return HttpResponse(f'{group.get_info()}')
 
 

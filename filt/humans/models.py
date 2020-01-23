@@ -5,22 +5,22 @@ from django.db import models
 
 
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    country = models.CharField(max_length=100, null=True, blank=True)
-    lesson = models.CharField(max_length=100)
-    birth_date = models.DateField()
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    country = models.CharField(max_length=255, null=True, blank=True)
+    lesson = models.CharField(max_length=255)
+    birth_date = models.DateField(max_length=255)
     email = models.EmailField()
-    phone = models.CharField(max_length=16)
+    phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
-    credit_card = models.CharField(max_length=20, null=True, blank=True)
+    credit_card = models.CharField(max_length=255, null=True, blank=True)
 
     def get_info(self):
         return f'{self.first_name} {self.last_name} {self.birth_date}' \
                f' {self.email} {self.country} {self.lesson}'
 
     @classmethod
-    def generate(cls):
+    def generate_teacher(cls):
         fake = Faker()
         teacher = cls(
             first_name=fake.first_name(),
@@ -38,12 +38,12 @@ class Teacher(models.Model):
 
 
 class Group(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    lesson = models.CharField(max_length=100)
-    curator = models.CharField(max_length=100, null=True, blank=True)
-    group = models.CharField(max_length=20,  null=True, blank=True)
-    phone = models.CharField(max_length=16)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    lesson = models.CharField(max_length=255)
+    curator = models.CharField(max_length=255, null=True, blank=True)
+    group = models.CharField(max_length=255,  null=True, blank=True)
+    phone = models.CharField(max_length=255,  null=True, blank=True)
     curratt = models.ForeignKey('humans.Teacher', null=True, blank=True, on_delete=models.CASCADE,
                                 related_name='cur')
     headman = models.ForeignKey('humans.Student',  null=True, blank=True, on_delete=models.CASCADE,
@@ -55,7 +55,7 @@ class Group(models.Model):
                f' lessons:: {self.lesson} | Phone:: {self.phone}'
 
     @classmethod
-    def generate(cls):
+    def generate_group(cls):
         faker = Faker()
         less = ['Math', 'Physics', 'History',
                 'Language', 'Management', 'Python']
@@ -72,18 +72,17 @@ class Group(models.Model):
 
 
 class Student(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=16)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255,  null=True, blank=True)
     email = models.EmailField()
     address = models.CharField(max_length=255, null=True, blank=True)
-    group = models.ForeignKey('humans.Group', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_info(self):
         return f'Student:: {self.first_name} {self.last_name} | Phone'
 
     @classmethod
-    def generate(cls):
+    def generate_student(cls):
         faker = Faker()
         student = cls(
             first_name=faker.first_name(),

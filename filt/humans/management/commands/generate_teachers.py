@@ -14,4 +14,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         number = int(options.get('number') or 100)
         for _ in range(number):
-            Teacher.generate()
+            Teacher.generate_teacher()

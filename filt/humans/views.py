@@ -8,7 +8,7 @@ from humans.forms import TeacherAddForm, GroupAddForm, EmailForm
 
 
 def generate_group(request):
-    group = Group.generate_group()
+    group = Group.generate()
     return HttpResponse(f'{group.get_info()}')
 
 
@@ -28,7 +28,7 @@ def generate_teacher(request):
 
 
 def generate_groups(request):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('curratt', 'headman')
     gr = request.GET.get('push')
 
     if gr:

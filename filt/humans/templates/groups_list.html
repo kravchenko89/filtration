@@ -31,23 +31,21 @@
       <tr>
         <th>Edit</th>
         <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Group</th>
         <th>Curator</th>
+        <th>Headman</th>
+        <th>Name</th>
         <th>Lesson</th>
         <th>Phone</th>
       </tr>
               {% for group in generate_groups %}
       <tr>
-        <td width="5"><a href="{% url 'edit-group' group.id %}">Edit</a></td>
-        <td width="5">{{group.id}}</td>
-        <td width="20">{{group.first_name}}</td>
-        <td width="20">{{group.last_name}}</td>
-        <td width="5">{{group.group}}</td>
-        <td width="15">{{group.curator}}</td>
+        <td width="10"><a href="{% url 'edit-group' group.id %}">Edit</a></td>
+        <td width="10">{{group.id}}</td>
+        <td width="20">{{group.curratt.first_name}}  {{group.curratt.last_name}}</td>
+        <td width="20">{{group.headman.first_name}}  {{group.headman.last_name}}</td>
+        <td width="20">{{group.first_name}}  {{group.last_name}}</td>
         <td width="10">{{group.lesson}}</td>
-        <td width="20">{{group.phone}}</td>
+        <td width="10">{{group.phone}}</td>
       </tr>
         {% endfor %}
     </table>

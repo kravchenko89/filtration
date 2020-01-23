@@ -20,7 +20,7 @@ class Teacher(models.Model):
                f' {self.email} {self.country} {self.lesson}'
 
     @classmethod
-    def generate_teacher(cls):
+    def generate(cls):
         fake = Faker()
         teacher = cls(
             first_name=fake.first_name(),
@@ -42,15 +42,20 @@ class Group(models.Model):
     last_name = models.CharField(max_length=100)
     lesson = models.CharField(max_length=100)
     curator = models.CharField(max_length=100, null=True, blank=True)
-    group = models.CharField(max_length=20)
+    group = models.CharField(max_length=20,  null=True, blank=True)
     phone = models.CharField(max_length=16)
+    curratt = models.ForeignKey('humans.Teacher', null=True, blank=True, on_delete=models.CASCADE,
+                                related_name='cur')
+    headman = models.ForeignKey('humans.Student',  null=True, blank=True, on_delete=models.CASCADE,
+                                related_name='headm')
 
     def get_info(self):
-        return f'Student:: {self.first_name} {self.last_name} | Group:: {self.group}' \
-               f' lessons:: {self.lesson} | Curator:: {self.curator} | Phone:: {self.phone}'
+        return f'Student:: {self.first_name} {self.last_name}' \
+               f'Curator:: {self.curratt} | Headman:: {self.headman} | Group:: {self.headman}' \
+               f' lessons:: {self.lesson} | Phone:: {self.phone}'
 
     @classmethod
-    def generate_group(cls):
+    def generate(cls):
         faker = Faker()
         less = ['Math', 'Physics', 'History',
                 'Language', 'Management', 'Python']
@@ -64,3 +69,28 @@ class Group(models.Model):
         )
         group.save()
         return group
+
+
+class Student(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=16)
+    email = models.EmailField()
+    address = models.CharField(max_length=255, null=True, blank=True)
+    group = models.ForeignKey('humans.Group', null=True, blank=True, on_delete=models.CASCADE)
+
+    def get_info(self):
+        return f'Student:: {self.first_name} {self.last_name} | Phone'
+
+    @classmethod
+    def generate(cls):
+        faker = Faker()
+        student = cls(
+            first_name=faker.first_name(),
+            last_name=faker.last_name(),
+            phone=faker.phone_number(),
+            email=faker.email(),
+            address=faker.address(),
+        )
+        student.save()
+        return student

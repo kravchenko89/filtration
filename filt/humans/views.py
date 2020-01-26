@@ -28,7 +28,7 @@ def generate_teacher(request):
 
 
 def generate_groups(request):
-    queryset = Group.objects.all()
+    queryset = Group.objects.all().select_related('curratt', 'headman')
     gr = request.GET.get('push')
 
     if gr:

@@ -1,14 +1,16 @@
 from django.contrib import admin
 
 from humans.models import Teacher, Group, Student
+from humans.forms import StudentAdminForm, TeacherAdminForm
 
 
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
-    readonly_fields = ('first_name', 'last_name')
-    list_display = ('id', 'full_name', 'lesson')
+    # readonly_fields = ('first_name', 'last_name')
+    list_display = ('id', 'full_name', 'lesson', 'phone')
     list_per_page = 15
     search_fields = ('first_name', 'last_name', 'lesson')
+    form = TeacherAdminForm
 
     def get_readonly_fields(self, request, obj=None):
 
@@ -26,8 +28,10 @@ class TeacherAdmin(admin.ModelAdmin):
         return True
 
 
-class StudentInline(admin.StackedInline):
+class StudentInline(admin.TabularInline):
     model = Student
+    show_change_link = True
+    readonly_fields = ('first_name', 'last_name', 'email', 'phone', 'address')
 
     def has_delete_permission(self, request, obj=None):
         if request.user.groups.filter(name='manager').exists():
@@ -42,6 +46,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_per_page = 15
     search_fields = ('first_name', 'last_name', 'group')
     inlines = (StudentInline, )
+    form = StudentAdminForm
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)
@@ -58,10 +63,11 @@ class GroupAdmin(admin.ModelAdmin):
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
-    readonly_fields = ('first_name', 'last_name')
+    # readonly_fields = ('first_name', 'last_name')
     list_display = ('id', 'full_name', 'address', 'phone')
     list_per_page = 15
     search_fields = ('first_name', 'last_name')
+    form = StudentAdminForm
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = super().get_readonly_fields(request, obj)

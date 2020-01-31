@@ -20,12 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'grku(qk389$3s!4#%+1n0z(yw*@x5&g)0jxm2ajv3@ylncxhi3'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ['*', '127.0.0.1']
 
 
 # Application definition
@@ -77,18 +75,6 @@ WSGI_APPLICATION = 'teacher_generator.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'home',
-        'USER': 'vadimm',
-        'PASSWORD': '12345',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -150,14 +136,12 @@ LOGGING = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'vadim.hillel@gmail.com'
-EMAIL_HOST_PASSWORD = '12345678kv'
-
 INTERNAL_IPS = [
     '127.0.0.1',
 
 ]
+
+try:
+    from teacher_generator.settings_loc import *
+except ImportError:
+    print('settings_loc not found!\n'*7)

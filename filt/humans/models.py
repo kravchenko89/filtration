@@ -5,11 +5,11 @@ from django.db import models
 
 
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     country = models.CharField(max_length=255, null=True, blank=True)
-    lesson = models.CharField(max_length=255)
-    birth_date = models.DateField(max_length=255)
+    lesson = models.CharField(max_length=255, null=True, blank=True)
+    birth_date = models.DateField(max_length=255, null=True, blank=True)
     email = models.EmailField()
     phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
@@ -26,7 +26,7 @@ class Teacher(models.Model):
             first_name=fake.first_name(),
             last_name=fake.last_name(),
             country=fake.country(),
-            lesson=random.choice(['math', 'physics', 'history', 'language']),
+            lesson=random.choice(['Math', 'Physics', 'History', 'Language']),
             birth_date=fake.date_object(),
             email=fake.email(),
             phone=fake.phone_number(),
@@ -36,47 +36,42 @@ class Teacher(models.Model):
         teacher.save()
         return teacher
 
+    def __str__(self):
+        return f'{self.id} {self.full_name}'
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Group(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    lesson = models.CharField(max_length=255)
-    curator = models.CharField(max_length=255, null=True, blank=True)
-    group = models.CharField(max_length=255,  null=True, blank=True)
-    phone = models.CharField(max_length=255,  null=True, blank=True)
-    curratt = models.ForeignKey('humans.Teacher', null=True, blank=True, on_delete=models.CASCADE,
-                                related_name='cur')
-    headman = models.ForeignKey('humans.Student',  null=True, blank=True, on_delete=models.CASCADE,
-                                related_name='headm')
+    name = models.CharField(max_length=255, null=True, blank=True)
+    curratt = models.ForeignKey('humans.Teacher', null=True, blank=True, on_delete=models.CASCADE)
+    headman = models.ForeignKey('humans.Student', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_info(self):
-        return f'Student:: {self.first_name} {self.last_name}' \
-               f'Curator:: {self.curratt} | Headman:: {self.headman} | Group:: {self.headman}' \
-               f' lessons:: {self.lesson} | Phone:: {self.phone}'
+        return f'Curator:: {self.curratt} | Headman:: {self.headman} | Group:: {self.name}'
 
     @classmethod
     def generate_group(cls):
         faker = Faker()
-        less = ['Math', 'Physics', 'History',
-                'Language', 'Management', 'Python']
         group = cls(
-            first_name=faker.first_name(),
-            last_name=faker.last_name(),
-            lesson=random.choice(less),
-            curator=faker.name(),
-            group=random.randint(1, 20),
-            phone=faker.phone_number(),
+            name=faker.word()
         )
         group.save()
         return group
 
+    def __str__(self):
+        return f'{self.id}  {self.curratt} {self.headman}'
+
 
 class Student(models.Model):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255,  null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField()
     address = models.CharField(max_length=255, null=True, blank=True)
+    groupp = models.ForeignKey('humans.Group', null=True, blank=True, on_delete=models.CASCADE)
 
     def get_info(self):
         return f'Student:: {self.first_name} {self.last_name} | Phone'
@@ -93,3 +88,10 @@ class Student(models.Model):
         )
         student.save()
         return student
+
+    def __str__(self):
+        return f'{self.id} {self.full_name}'
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'

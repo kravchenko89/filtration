@@ -33,10 +33,9 @@ def generate_groups(request):
 
     if gr:
         queryset = queryset.filter(
-            Q(first_name__istartswith=gr)
-            | Q(last_name__istartswith=gr)
-            | Q(lesson__istartswith=gr)
-            | Q(group__startswith=gr))
+            Q(name__istartswith=gr)
+            | Q(curratt__istartswith=gr)
+            | Q(headman__istartswith=gr))
 
     return render(request,
                   'groups_list.html',

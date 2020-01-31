@@ -2,11 +2,11 @@ import random
 
 from django.core.management.base import BaseCommand
 
-from humans.models import Group, Teacher, Student
+from humans.models import Teacher, Student, Group
 
 
 class Command(BaseCommand):
-    help = 'random group'
+    help = 'random teachers'
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -14,18 +14,20 @@ class Command(BaseCommand):
             help='Delete poll instennd of closin it',)
 
     def handle(self, *args, **options):
-        # Group.objects.all().delete()
-        # pdb.set_trace()
-        curators = []   # Teacher
-        headmans = []   # Student
-        print(curators)
-        for _ in range(10):
-            curators.append(Teacher.generate_teacher())
-            headmans.append(Student.generate_student())
 
-        number = int(options.get('number') or 100)
-        for _ in range(number):
-            group = Group.generate_group()
+        curators = []   # Teacher
+        groups = []
+
+        for i in range(20):
+            groups.append(Group.generate_group())
+            curators.append(Teacher.generate_teacher())
+
+        students = list(Student.objects.all())
+        for group in Group.objects.all():
+            group.headman = random.choice(students)
             group.curratt = random.choice(curators)
-            group.headman = random.choice(headmans)
             group.save()
+
+        for student in Student.objects.all():
+            student.groupp = random.choice(groups)
+            student.save()

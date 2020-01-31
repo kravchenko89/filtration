@@ -34,18 +34,14 @@
         <th>Curator</th>
         <th>Headman</th>
         <th>Name</th>
-        <th>Lesson</th>
-        <th>Phone</th>
       </tr>
               {% for group in generate_groups %}
       <tr>
         <td width="10"><a href="{% url 'edit-group' group.id %}">Edit</a></td>
         <td width="10">{{group.id}}</td>
-        <td width="20">{{group.curratt.first_name}}  {{group.curratt.last_name}}</td>
-        <td width="20">{{group.headman.first_name}}  {{group.headman.last_name}}</td>
-        <td width="20">{{group.first_name}}  {{group.last_name}}</td>
-        <td width="10">{{group.lesson}}</td>
-        <td width="10">{{group.phone}}</td>
+        <td width="20">{{group.curratt}}</td>
+        <td width="20">{{group.headman}}</td>
+        <td width="20">{{group.name}}</td>
       </tr>
         {% endfor %}
     </table>

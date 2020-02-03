@@ -34,14 +34,14 @@ class TestUrls(TestCase):
 
         assert response.status_code == 302
 
-        teach['first_name'] = 'WRONG'
-        teach['last_name'] = 'WRONG'
-        teach['country'] = 'WRONG'
-        teach['lesson'] = 'WRONG'
-        teach['birth_date'] = 'WRONG'
-        teach['email'] = 'WRONG'
-        teach['phone'] = 'WRONG'
-        teach['address'] = 'WRONG'
-        teach['credit_card'] = 'WRONG'
+        # teach['first_name'] = 'WRONG'
+        # teach['last_name'] = 'WRONG'
+        # teach['country'] = 'WRONG'
+        # teach['lesson'] = 'WRONG'
+        # teach['birth_date'] = 'WRONG'
+        # teach['email'] = 'WRONG'
+        # teach['phone'] = 'WRONG'
+        # teach['address'] = 'WRONG'
+        # teach['credit_card'] = 'WRONG'
         response = self.client.post(reverse('edit-teacher', args=[teacher.id]), teach)
         assert response.status_code == 200

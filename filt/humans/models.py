@@ -11,7 +11,7 @@ class Teacher(models.Model):
     lesson = models.CharField(max_length=255, null=True, blank=True)
     birth_date = models.DateField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(unique=True, max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     credit_card = models.CharField(max_length=255, null=True, blank=True)
 
@@ -68,7 +68,7 @@ class Group(models.Model):
 class Student(models.Model):
     first_name = models.CharField(max_length=255, null=True, blank=True)
     last_name = models.CharField(max_length=255, null=True, blank=True)
-    phone = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(unique=True, max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     groupp = models.ForeignKey('humans.Group', null=True, blank=True, on_delete=models.CASCADE)
@@ -95,3 +95,11 @@ class Student(models.Model):
     @property
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
+
+
+# class Logger(models.Model):
+#     path = CharField()
+#     method = CharField() # OR IntegerField  with choice
+#     time_delta = CharField or Other
+#     user_id = IntegerField()
+#     created = DateTimeField(auto_now=True)

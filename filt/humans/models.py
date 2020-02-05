@@ -97,9 +97,13 @@ class Student(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 
-# class Logger(models.Model):
-#     path = CharField()
-#     method = CharField() # OR IntegerField  with choice
-#     time_delta = CharField or Other
-#     user_id = IntegerField()
-#     created = DateTimeField(auto_now=True)
+class Logger(models.Model):
+    path = models.CharField(max_length=255, null=True, blank=True)
+    method = models.CharField(max_length=255, null=True, blank=True)
+    time_delta = models.FloatField(null=True, blank=True)
+    user_id = models.IntegerField()
+    created = models.DateTimeField(auto_now=True)
+
+    def get_info(self):
+        return f'{self.path} {self.method} {self.time_delta}' \
+               f'{self.user_id} {self.created}'

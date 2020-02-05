@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from humans.models import Teacher, Group, Student
-from humans.forms import StudentAdminForm, TeacherAdminForm
+from humans.models import Teacher, Group, Student, Logger
+from humans.forms import StudentAdminForm, TeacherAdminForm, LoggerAdminForm
 
 
 @admin.register(Teacher)
@@ -87,3 +87,9 @@ class StudentAdmin(admin.ModelAdmin):
         # if request.user.groups.filter(name='manager').exists():
         #     return False
         # return True
+
+
+@admin.register(Logger)
+class LoggerAdmin(admin.ModelAdmin):
+    list_display = ('path', 'method', 'time_delta', 'user_id', 'created')
+    form = LoggerAdminForm

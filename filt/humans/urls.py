@@ -4,7 +4,7 @@ from django.urls import include, path
 from humans.views import (generate_teacher, generate_group,
                           generate_groups, add_teacher,
                           add_group, edit_teacher, edit_group,
-                          email_list, email_text, create_author)
+                          email_list, email_text, create_author, logger)
 
 urlpatterns = [
     path('filt/teach/', generate_teacher, name='filt-teacher'),
@@ -16,7 +16,8 @@ urlpatterns = [
     path('edit/group/<int:num>/', edit_group, name='edit-group'),
     path('email/list/', email_list, name='email-list'),
     path('email/', email_text, name='email'),
-    path('create/', create_author, name='create')
+    path('create/', create_author, name='create'),
+    path('logger/', logger, name='logger'),
 ]
 
 if settings.DEBUG:
@@ -24,5 +25,5 @@ if settings.DEBUG:
 
     urlpatterns = [
                       path('__debug__/', include(debug_toolbar.urls)),
-                      path(r'^silk/', include('silk.urls', namespace='silk'))
+                      path(r'silk/', include('silk.urls', namespace='silk'))
                   ] + urlpatterns

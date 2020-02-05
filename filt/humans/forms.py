@@ -1,7 +1,7 @@
 from django.forms import (ModelForm, Form, EmailField,
                           CharField, ValidationError)
 from django import forms
-from django.core.mail import send_mail
+
 from django.conf import settings
 
 
@@ -119,6 +119,12 @@ class EmailForm(Form):
     email = EmailField()
     subject = CharField()
     text = forms.CharField(widget=forms.Textarea)
+
+
+class LoggerAdminForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
 
     def save_email(self):
         data = self.cleaned_data

@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 
-from humans.models import Teacher, Group
+from humans.models import Teacher, Group, Logger
 from humans.forms import TeacherAddForm, GroupAddForm,\
                             EmailForm, EmailAuthForm
 
@@ -137,3 +137,8 @@ def create_author(request):
     return render(request,
                   'create.html',
                   context={'form': form})
+
+
+def logger(request):
+    logger = Logger.objects.all()
+    return HttpResponse(f'{logger}{request.user}')

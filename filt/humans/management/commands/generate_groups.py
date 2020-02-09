@@ -1,4 +1,5 @@
 import random
+import re
 
 from django.core.management.base import BaseCommand
 
@@ -21,6 +22,10 @@ class Command(BaseCommand):
         for i in range(20):
             groups.append(Group.generate_group())
             curators.append(Teacher.generate_teacher())
+
+        for teacher in Teacher.objects.all():
+            teacher.phone = re.sub("\D", "", teacher.phone)
+            teacher.save()
 
         students = list(Student.objects.all())
         for group in Group.objects.all():

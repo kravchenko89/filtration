@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--number',
-            help='Delete poll instennd of closin it',)
+            help='Delete poll instennd of closin it', )
 
     def handle(self, *args, **options):
         Group.objects.all().delete()

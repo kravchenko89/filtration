@@ -1,9 +1,11 @@
 from django.forms import (ModelForm, Form, EmailField,
                           CharField, ValidationError)
 from django import forms
-from django.core.mail import send_mail
+
 from django.conf import settings
 
+
+from humans.tasks import task_email_send
 from humans.models import Teacher, Group, Student
 
 
@@ -118,13 +120,29 @@ class EmailForm(Form):
     subject = CharField()
     text = forms.CharField(widget=forms.Textarea)
 
+
+class LoggerAdminForm(ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+
     def save_email(self):
         data = self.cleaned_data
         subject = data['subject']
         message = data['text']
         email_from = data['email']
         recipient_list = [settings.EMAIL_HOST_USER]
-        send_mail(subject, message, email_from, recipient_list)
+        task_email_send.delay(subject, message, email_from, recipient_list)
+        # send_mail(subject, message, email_from, recipient_list)
 
         with open('emm.txt', 'a') as tex:
             tex.write(f"Email_from: {email_from} | Subject: {subject} | Message: {message} <br>")
+
+
+class EmailAuthForm(Form):
+    email = EmailField()
+
+    def save_authot(self):
+        data = self.cleaned_data
+        email_from = data['email']
+        recipient_list = [settings.EMAIL_HOST_USER]

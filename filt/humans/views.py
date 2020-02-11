@@ -3,8 +3,9 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from django.urls import reverse
 
-from humans.models import Teacher, Group
-from humans.forms import TeacherAddForm, GroupAddForm, EmailForm
+from humans.models import Teacher, Group, Logger
+from humans.forms import TeacherAddForm, GroupAddForm,\
+                            EmailForm, EmailAuthForm
 
 
 def generate_group(request):
@@ -111,7 +112,7 @@ def email_list(request):
         form = EmailForm(request.POST)
         if form.is_valid():
             form.save_email()
-            return HttpResponseRedirect(reverse('email-list'))
+            return HttpResponseRedirect(reverse('filt-teacher'))
     else:
         form = EmailForm()
     return render(request,
@@ -123,3 +124,21 @@ def email_text(request):
     with open('emm.txt') as file:
         txt = file.read()
     return HttpResponse(txt)
+
+
+def create_author(request):
+    if request.method == 'POST':
+        form = EmailAuthForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('filt-teacher'))
+    else:
+        form = EmailAuthForm()
+    return render(request,
+                  'create.html',
+                  context={'form': form})
+
+
+def logger(request):
+    logger = Logger.objects.all()
+    return HttpResponse(f'{logger}{request.user}')

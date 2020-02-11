@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from humans.models import Teacher, Group, Student
-from humans.forms import StudentAdminForm, TeacherAdminForm
+from humans.models import Teacher, Group, Student, Logger
+from humans.forms import StudentAdminForm, TeacherAdminForm, LoggerAdminForm
 
 
 @admin.register(Teacher)
@@ -22,10 +22,11 @@ class TeacherAdmin(admin.ModelAdmin):
         return readonly_fields
 
     def has_delete_permission(self, request, obj=None):
+        return not request.user.groups.filter(name='manager').exists()
 
-        if request.user.groups.filter(name='manager').exists():
-            return False
-        return True
+        # if request.user.groups.filter(name='manager').exists():
+        #     return False
+        # return True
 
 
 class StudentInline(admin.TabularInline):
@@ -34,9 +35,10 @@ class StudentInline(admin.TabularInline):
     readonly_fields = ('first_name', 'last_name', 'email', 'phone', 'address')
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.groups.filter(name='manager').exists():
-            return False
-        return True
+        return not request.user.groups.filter(name='manager').exists()
+        # if request.user.groups.filter(name='manager').exists():
+        #     return False
+        # return True
 
 
 @admin.register(Group)
@@ -56,9 +58,11 @@ class GroupAdmin(admin.ModelAdmin):
         return readonly_fields
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.groups.filter(name='manager').exists():
-            return False
-        return True
+
+        return not request.user.groups.filter(name='manager').exists()
+
+        # if request.user.groups.filter(name='manager').exists():
+        #     return False
 
 
 @admin.register(Student)
@@ -77,6 +81,15 @@ class StudentAdmin(admin.ModelAdmin):
         return readonly_fields
 
     def has_delete_permission(self, request, obj=None):
-        if request.user.groups.filter(name='manager').exists():
-            return False
-        return True
+
+        return not request.user.groups.filter(name='manager').exists()
+
+        # if request.user.groups.filter(name='manager').exists():
+        #     return False
+        # return True
+
+
+@admin.register(Logger)
+class LoggerAdmin(admin.ModelAdmin):
+    list_display = ('path', 'method', 'time_delta', 'user_id', 'created')
+    form = LoggerAdminForm

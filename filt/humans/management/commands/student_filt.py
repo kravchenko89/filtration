@@ -1,7 +1,4 @@
 import re
-from faker import Faker
-
-fak = Faker
 
 from django.core.management.base import BaseCommand
 

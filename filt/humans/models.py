@@ -101,7 +101,7 @@ class Logger(models.Model):
     path = models.CharField(max_length=255, null=True, blank=True)
     method = models.CharField(max_length=255, null=True, blank=True)
     time_delta = models.FloatField(null=True, blank=True)
-    user_id = models.IntegerField()
+    user_id = models.IntegerField(null=True)
     created = models.DateTimeField(auto_now=True)
 
     def get_info(self):

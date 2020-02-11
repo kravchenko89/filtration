@@ -12,12 +12,12 @@ class AdminMiddleware(object):
 
         if request.path.startswith('/admin/'):
 
-            time_full = float(time.time() - request.start_time).__round__(2)
+            time_full = (time.time() - request.start_time).__round__(3)
             # breakpoint()
 
             Logger.objects.create(path=request.path, method=request.method,
                                   user_id=request.user.id,
                                   time_delta=time_full)
             return response
-        else:
-            return response
+
+        return response

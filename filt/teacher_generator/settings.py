@@ -18,7 +18,7 @@ from celery.schedules import crontab
 CELERY_BEAT_SCHEDULE = {
     'task_1': {
         'task': 'humans.tasks.task_clean',
-        'schedule': crontab(),
+        'schedule': crontab(minute=0, hour=0),
     }
 }
 

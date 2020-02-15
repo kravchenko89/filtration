@@ -139,10 +139,10 @@ class LoggerAdminForm(ModelForm):
             tex.write(f"Email_from: {email_from} | Subject: {subject} | Message: {message} <br>")
 
 
-class EmailAuthForm(Form):
-    email = EmailField()
-
-    def save_authot(self):
-        data = self.cleaned_data
-        email_from = data['email']
-        recipient_list = [settings.EMAIL_HOST_USER]
+# class EmailAuthForm(Form):
+#     email = EmailField()
+#
+#     def save_authot(self):
+#         data = self.cleaned_data
+#         email_from = data['email']
+#         recipient_list = [settings.EMAIL_HOST_USER]

@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from humans.models import Teacher, Group, Logger
 from humans.forms import TeacherAddForm, GroupAddForm,\
-                            EmailForm, EmailAuthForm
+                            EmailForm
 
 
 def generate_group(request):
@@ -124,19 +124,6 @@ def email_text(request):
     with open('emm.txt') as file:
         txt = file.read()
     return HttpResponse(txt)
-
-
-def create_author(request):
-    if request.method == 'POST':
-        form = EmailAuthForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('filt-teacher'))
-    else:
-        form = EmailAuthForm()
-    return render(request,
-                  'create.html',
-                  context={'form': form})
 
 
 def logger(request):

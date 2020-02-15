@@ -12,6 +12,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+from celery.schedules import crontab
+
+
+CELERY_BEAT_SCHEDULE = {
+    'task_1': {
+        'task': 'humans.tasks.task_clean',
+        'schedule': crontab(minute=0, hour=0),
+    }
+}
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 
 # Application definition
@@ -39,6 +49,8 @@ INSTALLED_APPS = [
     'silk',
 
     'debug_toolbar',
+
+    'django_celery_beat',
 
     'humans',
 ]

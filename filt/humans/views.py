@@ -129,3 +129,11 @@ def email_text(request):
 def logger(request):
     logger = Logger.objects.all()
     return HttpResponse(f'{logger}{request.user}')
+
+
+def handler404(request):
+    return render(request, 'error_404.html', status=404)
+
+
+def handler500(request):
+    return render(request, 'error_500.html', status=500)
